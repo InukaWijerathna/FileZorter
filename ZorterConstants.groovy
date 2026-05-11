@@ -3,9 +3,9 @@ import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
 /**
- * Constants and Configuration for FileZorta
+ * Constants and Configuration for FileZorter
  */
-class ZortaConstants {
+class ZorterConstants {
     // Default categories
     static Map DEFAULT_CATEGORIES = [
         'Images'     : ['.jpg', '.jpeg', '.png', '.gif', '.svg', '.heic', '.webp', '.bmp', '.ico', '.tif', '.tiff'],

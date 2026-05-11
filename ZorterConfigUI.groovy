@@ -4,19 +4,19 @@ import javax.swing.table.DefaultTableModel
 import java.awt.*
 
 /**
- * Advanced Key-Value configuration UI for FileZorta.
+ * Advanced Key-Value configuration UI for FileZorter.
  */
-class ZortaConfigUI {
+class ZorterConfigUI {
 
     static void showConfig(JFrame parent) {
         def swing = new SwingBuilder()
         
         // Prepare table data from existing categories
         def columnNames = ['Category', 'Extensions (comma separated)']
-        def data = ZortaConstants.CATEGORIES.collect { k, v -> [k, v.join(", ")] } as Object[][]
+        def data = ZorterConstants.CATEGORIES.collect { k, v -> [k, v.join(", ")] } as Object[][]
         def model = new DefaultTableModel(data, columnNames as Object[])
 
-        def dialog = swing.dialog(id: 'configDialog', title: 'FileZorta Configuration', modal: true, owner: parent, size: [500, 450], resizable: true) {
+        def dialog = swing.dialog(id: 'configDialog', title: 'FileZorter Configuration', modal: true, owner: parent, size: [500, 450], resizable: true) {
             borderLayout()
             
             tabbedPane(constraints: BorderLayout.CENTER) {
@@ -50,9 +50,9 @@ class ZortaConfigUI {
                 panel(title: 'General', border: BorderFactory.createEmptyBorder(10, 10, 10, 10)) {
                     gridLayout(columns: 1, rows: 6, vgap: 5)
                     label(text: "Junk File Pattern (Regex):")
-                    textField(text: ZortaConstants.junkPatternString, id: 'junkPatternField')
+                    textField(text: ZorterConstants.junkPatternString, id: 'junkPatternField')
                     label(text: "") // Spacer
-                    checkBox(text: "Always on top", selected: ZortaConstants.alwaysOnTop, id: 'alwaysOnTopCheck')
+                    checkBox(text: "Always on top", selected: ZorterConstants.alwaysOnTop, id: 'alwaysOnTopCheck')
                     label(text: "Changes to 'Always on top' require restart.", font: new Font('SansSerif', Font.ITALIC, 10))
                 }
             }
@@ -74,16 +74,16 @@ class ZortaConfigUI {
                             newCategories[key] = val.split(",").collect { it.trim() }.findAll { it }
                         }
                     }
-                    ZortaConstants.CATEGORIES = newCategories
+                    ZorterConstants.CATEGORIES = newCategories
                     
                     // 2. Save General Settings
-                    ZortaConstants.junkPatternString = swing.junkPatternField.text
-                    ZortaConstants.alwaysOnTop = swing.alwaysOnTopCheck.selected
+                    ZorterConstants.junkPatternString = swing.junkPatternField.text
+                    ZorterConstants.alwaysOnTop = swing.alwaysOnTopCheck.selected
                     
                     // Apply immediate UI changes if possible
-                    parent.alwaysOnTop = ZortaConstants.alwaysOnTop
+                    parent.alwaysOnTop = ZorterConstants.alwaysOnTop
                     
-                    ZortaConstants.saveConfig()
+                    ZorterConstants.saveConfig()
                     swing.configDialog.dispose()
                 })
                 button(text: 'Cancel', actionPerformed: { swing.configDialog.dispose() })

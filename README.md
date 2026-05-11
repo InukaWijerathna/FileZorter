@@ -1,6 +1,6 @@
-# FileZorta - The Universal File Janitor
+# FileZorter - The Universal File Janitor
 
-**FileZorta** is a high-performance, standalone directory orchestration utility that synthesizes automated file categorization with tactical junk-data elimination. It serves as a comprehensive "janitor" for digital workspaces, ensuring zero-latency organization through intelligent pattern matching.
+**FileZorter** is a high-performance, standalone directory orchestration utility that synthesizes automated file categorization with tactical junk-data elimination. It serves as a comprehensive "janitor" for digital workspaces, ensuring zero-latency organization through intelligent pattern matching.
 
 ---
 
@@ -28,7 +28,7 @@ Designed as a native desktop utility, the system operates as a non-destructive f
 - **Dynamic Status Downlink:** Features a 5000ms polling cycle that continuously monitors and refreshes file counts in the active operations sector.
 
 ### 🧬 Logical Framework
-- **Modular Class Architecture:** Divided into specialized components (`ZortaCore`, `ZortaConstants`, `ZortaConfigUI`) for maximum stability and ease of future feature expansion.
+- **Modular Class Architecture:** Divided into specialized components (`ZorterCore`, `ZorterConstants`, `ZorterConfigUI`) for maximum stability and ease of future feature expansion.
 - **Safety Constraints:** Implements strict metadata filtering to skip hidden system files and application source code, ensuring the system never "sieves" itself.
 
 ---
