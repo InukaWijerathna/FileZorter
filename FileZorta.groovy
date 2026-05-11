@@ -5,12 +5,14 @@ import javax.imageio.ImageIO
 import groovy.transform.Field
 
 /**
- * FolderSieve - The Universal Groovy Janitor
+ * FileZorta - The Universal Groovy Janitor
  * Main UI and Orchestration.
  */
 
 // 1. Setup Look and Feel
 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
+UIManager.put("MenuItem.maxCheckIconWidth", 0)
+UIManager.put("MenuItem.checkIconOffset", 0)
 
 // 2. State Variables
 @Field File selectedDir = null
@@ -22,7 +24,7 @@ UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())
 
 def updateStatus() {
     if (selectedDir && selectedDir.exists()) {
-        fileCount = SieveCore.countFiles(selectedDir)
+        fileCount = ZortaCore.countFiles(selectedDir)
         appStatusLabel.text = "<html>Folder: ${selectedDir.name}<br/>Files: ${fileCount}</html>"
     } else {
         appStatusLabel.text = "No Folder Selected"
@@ -36,10 +38,10 @@ def organizeFolder() {
     File organizedDir = new File(selectedDir, "Organized")
     
     selectedDir.eachFile { file ->
-        if (file.isFile() && !file.hidden && !SieveCore.isAppFile(file.name)) {
-            String category = SieveCore.getCategory(file.name)
+        if (file.isFile() && !file.hidden && !ZortaCore.isAppFile(file.name)) {
+            String category = ZortaCore.getCategory(file.name)
             File targetDir = new File(organizedDir, category)
-            SieveCore.safeMove(file, targetDir)
+            ZortaCore.safeMove(file, targetDir)
             movedCount++
         }
     }
@@ -53,7 +55,7 @@ def purgeFolder() {
     
     def junkFiles = []
     selectedDir.eachFile { file ->
-        if (file.isFile() && !file.hidden && file.name =~ SieveConstants.JUNK_PATTERN) {
+        if (file.isFile() && !file.hidden && file.name =~ ZortaConstants.getJunkPattern()) {
             junkFiles << file
         }
     }
@@ -88,10 +90,24 @@ swing.edt {
         println "Could not load icon: ${e.message}"
     }
 
-    appFrame = frame(title: 'FolderSieve', size: [300, 220], 
+    appFrame = frame(title: 'FileZorta', size: [300, 240], 
                   defaultCloseOperation: JFrame.EXIT_ON_CLOSE, 
-                  resizable: false, alwaysOnTop: true, show: true,
+                  resizable: false, alwaysOnTop: ZortaConstants.alwaysOnTop, show: true,
                   iconImage: logoImage) {
+        
+        menuBar {
+            menu(text: 'File') {
+                menuItem(text: 'Exit', actionPerformed: { System.exit(0) })
+            }
+            menu(text: 'Settings') {
+                menuItem(text: 'Configuration', actionPerformed: { ZortaConfigUI.showConfig(appFrame) })
+            }
+            menu(text: 'Help') {
+                menuItem(text: 'About', actionPerformed: {
+                    JOptionPane.showMessageDialog(appFrame, "FileZorta v1.1\nThe Universal Groovy Janitor", "About", JOptionPane.INFORMATION_MESSAGE)
+                })
+            }
+        }
         
         borderLayout()
         
@@ -112,7 +128,7 @@ swing.edt {
         }
         
         panel(constraints: BorderLayout.SOUTH, border: BorderFactory.createEmptyBorder(5, 10, 10, 10)) {
-            label(text: 'v1.1 - Multi-File Edition', font: new Font('SansSerif', Font.ITALIC, 10), foreground: Color.GRAY)
+            label(text: 'v1.1 - FileZorta', font: new Font('SansSerif', Font.ITALIC, 10), foreground: Color.GRAY)
         }
     }
 }

@@ -1,14 +1,14 @@
 /**
- * Core Logic for file organization and cleanup.
+ * Core Logic for FileZorta organization and cleanup.
  */
-class SieveCore {
+class ZortaCore {
 
     /**
-     * Determines the category for a given file name based on SieveConstants.
+     * Determines the category for a given file name based on ZortaConstants.
      */
     static String getCategory(String fileName) {
         def ext = fileName.lastIndexOf('.').with { it != -1 ? fileName.substring(it).toLowerCase() : "" }
-        def category = SieveConstants.CATEGORIES.find { key, list -> ext in list }?.key ?: "Misc"
+        def category = ZortaConstants.CATEGORIES.find { key, list -> ext in list }?.key ?: "Misc"
         return category
     }
 
@@ -50,6 +50,9 @@ class SieveCore {
      * Checks if a filename belongs to the application components.
      */
     static boolean isAppFile(String name) {
-        return name in ["FolderSieve.groovy", "SieveConstants.groovy", "SieveCore.groovy"]
+        return name in [
+            "FileZorta.groovy", "ZortaConstants.groovy", "ZortaCore.groovy", "ZortaConfigUI.groovy", 
+            "config.json", "assets", "FolderSieve.groovy", "SieveConstants.groovy", "SieveCore.groovy", "SieveConfigUI.groovy"
+        ]
     }
 }
