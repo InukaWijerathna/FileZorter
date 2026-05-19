@@ -1,6 +1,6 @@
 # FileZorter — The Universal File Janitor
 
-> **FileZorter** is a lightweight, standalone Windows utility that automatically organizes cluttered directories and eliminates junk files — with a clean native GUI and zero configuration required out of the box.
+ **FileZorter** is a lightweight, standalone Windows utility that automatically organizes cluttered directories and eliminates junk files — with a clean native GUI and zero configuration required out of the box.
 
 ---
 
