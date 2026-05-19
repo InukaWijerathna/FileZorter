@@ -1,5 +1,7 @@
 # FileZorter — The Universal File Janitor
 
+📥 **Download Setup:** [FileZorterSetup-v1.1.0](https://github.com/InukaWijerathna/FileZorter/releases/download/1.1/FileZorterSetup-v1.1.0.exe)
+
  **FileZorter** is a lightweight, standalone Windows utility that automatically organizes cluttered directories and eliminates junk files — with a clean native GUI and zero configuration required out of the box.
 
 ---
