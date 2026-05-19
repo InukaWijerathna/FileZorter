@@ -1,0 +1,63 @@
+plugins {
+    id 'groovy'
+    id 'com.gradleup.shadow' version '8.3.0'
+    id 'edu.sc.seis.launch4j' version '4.0.0'
+}
+
+group = 'com.filezorter'
+version = '1.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy:3.0.19'
+    implementation 'org.codehaus.groovy:groovy-swing:3.0.19'
+    implementation 'org.codehaus.groovy:groovy-json:3.0.19'
+}
+
+sourceSets {
+    main {
+        groovy {
+            srcDirs = ['src']
+            include '**/*.groovy'
+        }
+        resources {
+            srcDirs = ['src']
+            include 'assets/**'
+            include 'config.json'
+        }
+    }
+}
+
+shadowJar {
+    archiveClassifier.set('')
+    mergeServiceFiles()
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    manifest {
+        attributes 'Main-Class': 'FileZorter'
+    }
+}
+
+launch4j {
+    mainClassName = 'FileZorter'
+    jarTask = project.tasks.shadowJar
+    icon = "${projectDir}/src/assets/logo.ico"
+    outputDir = "launch4j"
+    outfile = "FileZorter.exe"
+    dontWrapJar = false
+    headerType = "gui"
+    jreMinVersion = "1.8.0"
+}
+
+task copyExe(type: Copy) {
+    dependsOn 'createExe'
+    from 'build/launch4j/FileZorter.exe'
+    into projectDir
+}
+
+build.dependsOn copyExe
